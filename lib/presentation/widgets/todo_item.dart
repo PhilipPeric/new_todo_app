@@ -62,7 +62,7 @@ class ToDoItem extends StatelessWidget {
                     ? '▼ ${todo.todoText!}'
                     : todo.todoText != null
                         ? todo.todoText!
-                        : "",
+                        : '',
             overflow: TextOverflow.ellipsis,
             maxLines: 3,
             style: TextStyle(
