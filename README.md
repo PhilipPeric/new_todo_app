@@ -1,16 +1,22 @@
-# new_todo_app
+# Приложение для организации тасок в рамках ШМР 2023
 
-A new Flutter project.
+### Что сделано в рамках второго домашнего задания
+- [x] Чтение, обновление, удаление тасок через бэкенд
+- [x] Стейт-менеджмент
+- [x] Подключен линтер
+- [x] Фикс недефолтной иконки приложения
 
-## Getting Started
+### Что не сделано
+- [ ] Сохранение данных на диск
 
-This project is a starting point for a Flutter application.
+### Как запустить 
+1. Переименовать файл .env.example в .env
+2. Прописать свой токен в .env
+3. Запустить flutter pub run build_runner build
 
-A few resources to get you started if this is your first Flutter project:
+[Скачать](https://github.com/PhilipPeric/new_todo_app/releases/download/2.0/app-release.apk)
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+![Скриншот](https://github.com/PhilipPeric/new_todo_app/blob/main/screenshots/tasks.png)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![Скриншот](https://github.com/PhilipPeric/new_todo_app/blob/main/screenshots/edit_task.png)
+
