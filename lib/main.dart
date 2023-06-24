@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:new_todo_app/widgets/form.dart';
-import './screens/home.dart';
+import 'package:new_todo_app/presentation/widgets/form.dart';
+import './presentation/screens/home.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,7 +19,9 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => const Home(),
-        '/newTask': (context) => const FormExample(),
+        '/newTask': (context) => FormExample(
+              todo: null,
+            ),
       },
       debugShowCheckedModeBanner: false,
       title: 'ToDo App',

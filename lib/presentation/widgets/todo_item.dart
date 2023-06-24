@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
-import '../model/todo.dart';
+import '../../domain/model/todo.dart';
 
 class ToDoItem extends StatelessWidget {
   final ToDo todo;
   final onToDoChanged;
   final onDeleteItem;
+  final onEditItem;
 
   const ToDoItem({
     Key? key,
     required this.todo,
     required this.onToDoChanged,
     required this.onDeleteItem,
+    required this.onEditItem,
   }) : super(key: key);
 
   @override
@@ -57,7 +60,9 @@ class ToDoItem extends StatelessWidget {
                 ? '❗️${todo.todoText!}'
                 : todo.isUnimportant
                     ? '▼ ${todo.todoText!}'
-                    : todo.todoText!,
+                    : todo.todoText != null
+                        ? todo.todoText!
+                        : "",
             overflow: TextOverflow.ellipsis,
             maxLines: 3,
             style: TextStyle(
@@ -65,10 +70,16 @@ class ToDoItem extends StatelessWidget {
               decoration: todo.isDone ? TextDecoration.lineThrough : null,
             ),
           ),
-          secondary: const Icon(
-            Icons.info,
+          secondary: InkWell(
+            onTap: () => onEditItem(context, todo),
+            child: const Icon(
+              Icons.info,
+            ),
           ),
-          subtitle: Text(todo.date ?? '',
+          subtitle: Text(
+              todo.deadline != null
+                  ? DateFormat('dd MMMM yyy').format(todo.deadline!)
+                  : '',
               style: const TextStyle(
                   color: Colors.grey, fontSize: 14, height: 14 / 20)),
           value: todo.isDone,

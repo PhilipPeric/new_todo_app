@@ -1,9 +1,17 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
-import 'package:new_todo_app/model/todo.dart';
+import 'package:new_todo_app/domain/model/todo.dart';
 import 'package:intl/intl.dart';
 
+import 'package:uuid/uuid.dart';
+
+var uuid = const Uuid();
+
 class FormExample extends StatefulWidget {
-  const FormExample({super.key});
+  ToDo? todo;
+
+  FormExample({super.key, required this.todo});
 
   @override
   State<FormExample> createState() => _FormExampleState();
@@ -15,6 +23,11 @@ class _FormExampleState extends State<FormExample> {
   bool isChecked = false;
   String dropdownValue = 'Нет';
   TextEditingController titleController = TextEditingController();
+  DateTime createdAt = DateTime.now();
+  DateTime changedAt = DateTime.now();
+  String lastUpdatedBy = DateTime.now().toString();
+  String id = uuid.v4();
+  bool isDone = false;
 
   void checkboxCallback(bool? checkboxState) {
     setState(() {
@@ -34,12 +47,13 @@ class _FormExampleState extends State<FormExample> {
     Navigator.pop(
         context,
         ToDo(
-          id: DateTime.now().millisecondsSinceEpoch.toString(),
+          createdAt,
+          changedAt,
+          lastUpdatedBy,
+          id: id,
           todoText: titleController.text,
-          date: selectedDate != null
-              ? DateFormat("dd MMMM yyy").format(selectedDate!)
-              : "",
-          isDone: false,
+          deadline: selectedDate,
+          isDone: isDone,
           isUnimportant: dropdownValue == 'Низкий' ? true : false,
           isUrgent: dropdownValue == '!! Высокий' ? true : false,
         ));
@@ -64,6 +78,38 @@ class _FormExampleState extends State<FormExample> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.todo != null) {
+      if (widget.todo!.deadline != null) {
+        selectedDate = widget.todo?.deadline;
+        isChecked = true;
+      }
+
+      if (widget.todo!.todoText != null) {
+        titleController.text = widget.todo!.todoText!;
+      }
+      if (widget.todo!.isUrgent) {
+        dropdownValue = '!! Высокий';
+      }
+      if (widget.todo!.isUnimportant) {
+        dropdownValue = 'Низкий';
+      }
+      if (widget.todo?.createdAt != null) {
+        createdAt = widget.todo!.createdAt!;
+      }
+      if (widget.todo?.changedAt != null) {
+        changedAt = widget.todo!.changedAt!;
+      }
+      if (widget.todo!.lastUpdatedBy != null) {
+        lastUpdatedBy = widget.todo!.lastUpdatedBy!;
+      }
+      if (widget.todo?.id != null) {
+        id = widget.todo!.id!;
+      }
+      isDone = widget.todo!.isDone;
+
+      widget.todo = null;
+    }
+
     return Scaffold(
         backgroundColor: const Color(0xFFE5E5E5),
         appBar: AppBar(
@@ -181,19 +227,19 @@ class _FormExampleState extends State<FormExample> {
                       dropdownValue = 'Нет';
                     });
                   },
-                  child: Row(
+                  child: const Row(
                     children: <Widget>[
                       Icon(
                         Icons.delete,
                         size: 20.0,
-                        color: const Color(0xFFFF3B30),
+                        color: Color(0xFFFF3B30),
                       ),
                       SizedBox(width: 20.0),
                       Text(
                         'Удалить',
                         style: TextStyle(
                           fontSize: 16.0,
-                          color: const Color(0xFFFF3B30),
+                          color: Color(0xFFFF3B30),
                         ),
                       ),
                     ],

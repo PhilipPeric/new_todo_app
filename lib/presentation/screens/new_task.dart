@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import '../../domain/model/todo.dart';
 import '../widgets/form.dart';
 
 class SecondScreen extends StatelessWidget {
-  const SecondScreen({super.key});
+  final ToDo? todo;
+
+  const SecondScreen(this.todo, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const FormExample();
+    return FormExample(todo: todo);
   }
 }
