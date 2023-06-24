@@ -13,6 +13,7 @@
 1. Переименовать файл .env.example в .env
 2. Прописать свой токен в .env
 3. Запустить flutter pub run build_runner build
+4. Готово - можно запускать проект на эмуляторе
 
 [Скачать](https://github.com/PhilipPeric/new_todo_app/releases/download/2.0/app-release.apk)
 
