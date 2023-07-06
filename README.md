@@ -21,7 +21,7 @@
 flutter test --flavor dev integration_test
 
 
-[Скачать](https://github.com/PhilipPeric/new_todo_app/releases/download/2.0/app-release.apk)
+[Скачать](https://github.com/PhilipPeric/new_todo_app/releases/download/3.0/app-release.apk)
 
 ![Скриншот](https://github.com/PhilipPeric/new_todo_app/blob/main/screenshots/tasks.png)
 
