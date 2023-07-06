@@ -49,7 +49,7 @@ class ToDoItem extends StatelessWidget {
         if (direction == DismissDirection.startToEnd) {
           onToDoChanged(todo);
         } else {
-          onDeleteItem(todo.id);
+          onDeleteItem(todo);
         }
       },
       child: CheckboxListTile(

@@ -2,15 +2,17 @@ import 'dart:convert';
 import 'package:logging/logging.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:new_todo_app/data/source/remote_data_source.dart';
 
-import '../../../env/env.dart';
-import '../domain/model/todo.dart';
+import '../../../../env/env.dart';
+import '../../domain/model/todo.dart';
 
 final log = Logger('ExampleLogger');
 
-class TodoApiService {
+class RemoteDataSource implements IRemoteDataSource {
   int? revision;
 
+  @override
   Future<List<ToDo>> listTodos() async {
     final List<ToDo> todosList = [];
 
@@ -38,6 +40,7 @@ class TodoApiService {
     return todosList;
   }
 
+  @override
   Future<ToDo?> updateTodoCompletion({required ToDo todo}) async {
     try {
       todo.isDone = !todo.isDone;
@@ -67,6 +70,7 @@ class TodoApiService {
     return null;
   }
 
+  @override
   Future<ToDo?> updateTodo({required ToDo todo}) async {
     try {
       final String body = jsonEncode({
@@ -96,6 +100,7 @@ class TodoApiService {
     return null;
   }
 
+  @override
   Future<ToDo?> createTodo({required ToDo todo}) async {
     try {
       final http.Response response = await http.post(
@@ -124,6 +129,7 @@ class TodoApiService {
     return null;
   }
 
+  @override
   Future<bool> deleteTodo({required String id}) async {
     try {
       final http.Response response = await http.delete(
@@ -148,6 +154,7 @@ class TodoApiService {
     return false;
   }
 
+  @override
   Future<ToDo?> getTodo({required int id}) async {
     try {
       final http.Response response = await http.get(
@@ -170,5 +177,41 @@ class TodoApiService {
     }
 
     return null;
+  }
+
+  @override
+  Future<List<ToDo>> patchTodos(List<ToDo> todos, int revision) async {
+    final List<ToDo> todosList = [];
+
+    try {
+      final http.Response response = await http.patch(
+        Uri.parse('${Env.todoServiceUrl}list/'),
+        headers: {
+          'Authorization': 'Bearer ${Env.token}',
+        },
+        body: jsonEncode({
+          'list': jsonEncode(todos).toString(),
+        }),
+      );
+      switch (response.statusCode) {
+        case 200:
+          final result = json.decode(response.body);
+          for (final Map<String, dynamic> todo in result['list']) {
+            todosList.add(ToDo.fromJson(todo));
+          }
+          revision = result['revision'];
+        default:
+          throw Exception(response.reasonPhrase);
+      }
+    } catch (e) {
+      log.severe('Patch: $e');
+    }
+
+    return todosList;
+  }
+
+  @override
+  int getRevision() {
+    return revision ?? -1;
   }
 }

@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:new_todo_app/domain/model/todo.dart';
 import 'package:intl/intl.dart';
@@ -94,10 +92,10 @@ class _FormExampleState extends State<FormExample> {
         dropdownValue = 'Низкий';
       }
       if (widget.todo?.createdAt != null) {
-        createdAt = widget.todo!.createdAt!;
+        createdAt = widget.todo!.createdAt;
       }
       if (widget.todo?.changedAt != null) {
-        changedAt = widget.todo!.changedAt!;
+        changedAt = widget.todo!.changedAt;
       }
       if (widget.todo!.lastUpdatedBy != null) {
         lastUpdatedBy = widget.todo!.lastUpdatedBy!;

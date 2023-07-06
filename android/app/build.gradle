@@ -52,6 +52,7 @@ android {
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        multiDexEnabled true
     }
     signingConfigs {
         release {
@@ -64,6 +65,20 @@ android {
     buildTypes {
         release {
             signingConfig signingConfigs.release
+        }
+    }
+    flavorDimensions "default"
+    productFlavors {
+        dev {
+            dimension "default"
+            versionNameSuffix "--dev"
+        }
+        stage {
+            dimension "default"
+            versionNameSuffix "--stage"
+        }
+        prod {
+            dimension "default"
         }
     }
 }

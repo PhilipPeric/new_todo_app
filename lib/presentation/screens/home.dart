@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
+import '../../data/repository/todo_service_impl.dart';
+import '../../data/source/local_data_source_impl.dart';
 import '../../domain/model/todo.dart';
 import '../widgets/todo_item.dart';
 import 'new_task.dart';
-import '../../data/todo_rest_api_service.dart';
+import '../../data/source/remote_data_source_impl.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -20,7 +22,7 @@ class _HomeState extends State<Home> {
   int _doneTasksCounter = 0;
   bool isFiltered = false;
 
-  TodoApiService todoApiSrv = TodoApiService();
+  var svc = TodoService(RemoteDataSource(), LocalDataSource());
 
   @override
   void initState() {
@@ -60,7 +62,7 @@ class _HomeState extends State<Home> {
                                         .toList())
                                       ToDoItem(
                                         todo: todo,
-                                        onToDoChanged: _handleToDoChange,
+                                        onToDoChanged: _handleToDoCheck,
                                         onDeleteItem: _deleteToDoItem,
                                         onEditItem:
                                             _awaitEditedValueFromSecondScreen,
@@ -70,7 +72,7 @@ class _HomeState extends State<Home> {
                                     for (ToDo todo in todosList)
                                       ToDoItem(
                                         todo: todo,
-                                        onToDoChanged: _handleToDoChange,
+                                        onToDoChanged: _handleToDoCheck,
                                         onDeleteItem: _deleteToDoItem,
                                         onEditItem:
                                             _awaitEditedValueFromSecondScreen,
@@ -87,7 +89,7 @@ class _HomeState extends State<Home> {
   }
 
   void _getData() async {
-    var resp = await todoApiSrv.listTodos();
+    var resp = await svc.getTodos();
     setState(() {
       todosList = resp;
       for (var i = 0; i < todosList.length; i++) {
@@ -98,8 +100,9 @@ class _HomeState extends State<Home> {
     });
   }
 
-  Future<void> _handleToDoChange(ToDo todo) async {
-    var resp = await todoApiSrv.updateTodoCompletion(todo: todo);
+  Future<void> _handleToDoCheck(ToDo todo) async {
+    todo.isDone = !todo.isDone;
+    var resp = await svc.updateTodo(todo);
     if (resp != null) {
       setState(() {
         todo = resp;
@@ -112,21 +115,19 @@ class _HomeState extends State<Home> {
     }
   }
 
-  Future<void> _deleteToDoItem(String id) async {
-    var success = await todoApiSrv.deleteTodo(id: id);
-    if (success) {
-      setState(() {
-        for (var i = 0; i < todosList.length; i++) {
-          if (todosList[i].id == id) {
-            if (todosList[i].isDone) {
-              _doneTasksCounter--;
-            }
-            break;
+  Future<void> _deleteToDoItem(ToDo todo) async {
+    await svc.deleteTodo(todo);
+    setState(() {
+      for (var i = 0; i < todosList.length; i++) {
+        if (todosList[i].id == todo.id) {
+          if (todosList[i].isDone) {
+            _doneTasksCounter--;
           }
+          break;
         }
-        todosList.removeWhere((item) => item.id == id);
-      });
-    }
+      }
+      todosList.removeWhere((item) => item.id == todo.id);
+    });
   }
 
   void _awaitEditedValueFromSecondScreen(
@@ -151,7 +152,7 @@ class _HomeState extends State<Home> {
   }
 
   Future<void> _addToDoItem(ToDo toDo) async {
-    var resp = await todoApiSrv.createTodo(todo: toDo);
+    var resp = await svc.saveTodo(toDo);
     if (resp != null) {
       setState(() {
         todosList.add(resp);
@@ -161,7 +162,7 @@ class _HomeState extends State<Home> {
   }
 
   Future<void> _updateToDo(ToDo todo) async {
-    var resp = await todoApiSrv.updateTodo(todo: todo);
+    var resp = await svc.updateTodo(todo);
     if (resp != null) {
       setState(() {
         for (var i = 0; i < todosList.length; i++) {
@@ -189,21 +190,17 @@ class _HomeState extends State<Home> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                child: const Text(
-                  'Мои дела',
-                  style: TextStyle(
-                      color: Colors.black, fontSize: 32, height: 38 / 32),
-                ),
+              const Text(
+                'Мои дела',
+                style: TextStyle(
+                    color: Colors.black, fontSize: 32, height: 38 / 32),
               ),
-              Container(
-                child: Text(
-                  'Выполнено - $_doneTasksCounter',
-                  style: const TextStyle(
-                    color: Colors.grey,
-                    fontSize: 14.0,
-                    height: 14 / 20,
-                  ),
+              Text(
+                'Выполнено - $_doneTasksCounter',
+                style: const TextStyle(
+                  color: Colors.grey,
+                  fontSize: 14.0,
+                  height: 14 / 20,
                 ),
               ),
             ],
