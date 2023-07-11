@@ -41,54 +41,57 @@ class _HomeState extends State<Home> {
         tooltip: 'Create new task',
         child: const Icon(Icons.add),
       ),
-      body: CustomScrollView(
-          slivers: todosList.isNotEmpty
-              ? <Widget>[
-                  _buildSliverAppBar(),
-                  SliverToBoxAdapter(
-                    child: Card(
-                      margin: const EdgeInsets.all(20),
-                      elevation: 4,
-                      color: Colors.white,
-                      child: Column(
-                        children: <Widget>[
-                          ListView(
-                            controller: scrollController,
-                            shrinkWrap: true,
-                            children: isFiltered
-                                ? <Widget>[
-                                    for (ToDo todo in todosList
-                                        .where((item) => !item.isDone)
-                                        .toList())
-                                      ToDoItem(
-                                        todo: todo,
-                                        onToDoChanged: _handleToDoCheck,
-                                        onDeleteItem: _deleteToDoItem,
-                                        onEditItem:
-                                            _awaitEditedValueFromSecondScreen,
-                                      ),
-                                  ]
-                                : <Widget>[
-                                    for (ToDo todo in todosList)
-                                      ToDoItem(
-                                        todo: todo,
-                                        onToDoChanged: _handleToDoCheck,
-                                        onDeleteItem: _deleteToDoItem,
-                                        onEditItem:
-                                            _awaitEditedValueFromSecondScreen,
-                                      ),
-                                  ], // Set this
-                          )
-                        ],
+      body: RefreshIndicator(
+        onRefresh: _getData,
+        child: CustomScrollView(
+            slivers: todosList.isNotEmpty
+                ? <Widget>[
+                    _buildSliverAppBar(),
+                    SliverToBoxAdapter(
+                      child: Card(
+                        margin: const EdgeInsets.all(20),
+                        elevation: 4,
+                        color: Colors.white,
+                        child: Column(
+                          children: <Widget>[
+                            ListView(
+                              controller: scrollController,
+                              shrinkWrap: true,
+                              children: isFiltered
+                                  ? <Widget>[
+                                      for (ToDo todo in todosList
+                                          .where((item) => !item.isDone)
+                                          .toList())
+                                        ToDoItem(
+                                          todo: todo,
+                                          onToDoChanged: _handleToDoCheck,
+                                          onDeleteItem: _deleteToDoItem,
+                                          onEditItem:
+                                              _awaitEditedValueFromSecondScreen,
+                                        ),
+                                    ]
+                                  : <Widget>[
+                                      for (ToDo todo in todosList)
+                                        ToDoItem(
+                                          todo: todo,
+                                          onToDoChanged: _handleToDoCheck,
+                                          onDeleteItem: _deleteToDoItem,
+                                          onEditItem:
+                                              _awaitEditedValueFromSecondScreen,
+                                        ),
+                                    ], // Set this
+                            )
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ]
-              : <Widget>[_buildSliverAppBar()]),
+                  ]
+                : <Widget>[_buildSliverAppBar()]),
+      ),
     );
   }
 
-  void _getData() async {
+  Future<void> _getData() async {
     var resp = await svc.getTodos();
     setState(() {
       todosList = resp;

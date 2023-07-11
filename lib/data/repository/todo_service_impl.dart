@@ -19,8 +19,8 @@ class TodoService implements ITodosRepository {
       var data = await remoteDataSource.listTodos();
       final localRev = await localDataSource.getTodos();
 
-      if (remoteDataSource.getRevision() >
-          await localDataSource.getRevision()) {
+      if (data != null && remoteDataSource.getRevision() >
+          await localDataSource.getRevision())  {
         localDataSource.updateTodos(data, remoteDataSource.getRevision());
         return data;
       } else if (remoteDataSource.getRevision() <
@@ -29,7 +29,7 @@ class TodoService implements ITodosRepository {
             localRev, await localDataSource.getRevision());
         return data;
       } else {
-        return data;
+        return data ?? localRev;
       }
     } else {
       return await localDataSource.getTodos();
@@ -42,7 +42,7 @@ class TodoService implements ITodosRepository {
       var data = await remoteDataSource.createTodo(todo: todo);
       await localDataSource.saveTodo(todo, remoteDataSource.getRevision());
 
-      return data;
+      return data ?? todo;
     } else {
       var curRev = await localDataSource.getRevision();
       await localDataSource.saveTodo(todo, ++curRev);

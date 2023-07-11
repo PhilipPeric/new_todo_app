@@ -17,8 +17,12 @@ void main() {
           await tester.pumpAndSettle();
           expect(find.text('Мои дела'), findsWidgets);
 
+          await Future.delayed(const Duration(seconds: 3));
+
           await tester.tap(find.byType(FloatingActionButton));
           await tester.pumpAndSettle();
+
+          await Future.delayed(const Duration(seconds: 3));
 
           // СОХРАНИТЬ button is on form page, so we checked functionality of routing to task creation
           expect(find.text('СОХРАНИТЬ'), findsWidgets);

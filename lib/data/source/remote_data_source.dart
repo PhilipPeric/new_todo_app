@@ -1,7 +1,7 @@
 import '../../domain/model/todo.dart';
 
 abstract class IRemoteDataSource {
-  Future<List<ToDo>> listTodos();
+  Future<List<ToDo>?> listTodos();
 
   Future<ToDo?> updateTodoCompletion({required ToDo todo});
 

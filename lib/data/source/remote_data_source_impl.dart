@@ -13,7 +13,7 @@ class RemoteDataSource implements IRemoteDataSource {
   int? revision;
 
   @override
-  Future<List<ToDo>> listTodos() async {
+  Future<List<ToDo>?> listTodos() async {
     final List<ToDo> todosList = [];
 
     try {
@@ -22,7 +22,7 @@ class RemoteDataSource implements IRemoteDataSource {
         headers: {
           'Authorization': 'Bearer ${Env.token}',
         },
-      );
+      ).timeout(const Duration(seconds: 2));
       switch (response.statusCode) {
         case 200:
           final result = json.decode(response.body);
@@ -37,7 +37,7 @@ class RemoteDataSource implements IRemoteDataSource {
       log.severe('List: $e');
     }
 
-    return todosList;
+    return null;
   }
 
   @override
@@ -53,7 +53,7 @@ class RemoteDataSource implements IRemoteDataSource {
         body: jsonEncode({
           'element': todo.toJson(),
         }),
-      );
+      ).timeout(const Duration(seconds: 2));
 
       switch (response.statusCode) {
         case 200:
@@ -83,7 +83,7 @@ class RemoteDataSource implements IRemoteDataSource {
           'X-Last-Known-Revision': revision.toString(),
         },
         body: body,
-      );
+      ).timeout(const Duration(seconds: 2));
 
       switch (response.statusCode) {
         case 200:
@@ -112,7 +112,7 @@ class RemoteDataSource implements IRemoteDataSource {
         body: jsonEncode({
           'element': todo.toJson(),
         }),
-      );
+      ).timeout(const Duration(seconds: 2));
 
       switch (response.statusCode) {
         case 200:
@@ -138,7 +138,7 @@ class RemoteDataSource implements IRemoteDataSource {
           'Authorization': 'Bearer ${Env.token}',
           'X-Last-Known-Revision': revision.toString(),
         },
-      );
+      ).timeout(const Duration(seconds: 2));
 
       switch (response.statusCode) {
         case 200:
@@ -162,7 +162,7 @@ class RemoteDataSource implements IRemoteDataSource {
         headers: {
           'Authorization': 'Bearer ${Env.token}',
         },
-      );
+      ).timeout(const Duration(seconds: 2));
       switch (response.statusCode) {
         case 200:
           final todoJson = json.decode(response.body);
@@ -192,7 +192,7 @@ class RemoteDataSource implements IRemoteDataSource {
         body: jsonEncode({
           'list': jsonEncode(todos).toString(),
         }),
-      );
+      ).timeout(const Duration(seconds: 2));
       switch (response.statusCode) {
         case 200:
           final result = json.decode(response.body);
