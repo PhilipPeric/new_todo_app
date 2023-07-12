@@ -17,18 +17,16 @@ class TodoService implements ITodosRepository {
   Future<List<ToDo>> getTodos() async {
     if (await checkInternetConnectivity()) {
       var data = await remoteDataSource.listTodos();
-      final localRev = await localDataSource.getTodos();
+      final local = await localDataSource.getTodos();
+      final localRev = await localDataSource.getRevision();
+      final remoteRev = remoteDataSource.getRevision();
 
-      if (remoteDataSource.getRevision() >
-          await localDataSource.getRevision()) {
-        localDataSource.updateTodos(data, remoteDataSource.getRevision());
-        return data;
-      } else if (remoteDataSource.getRevision() <
-          await localDataSource.getRevision()) {
-        data = await remoteDataSource.patchTodos(
-            localRev, await localDataSource.getRevision());
+      if (remoteRev > localRev) {
+        localDataSource.updateTodos(data, remoteRev);
         return data;
       } else {
+        data = await remoteDataSource.patchTodos(local, remoteRev);
+        localDataSource.updateTodos(data, remoteRev);
         return data;
       }
     } else {
@@ -45,7 +43,8 @@ class TodoService implements ITodosRepository {
       return data;
     } else {
       var curRev = await localDataSource.getRevision();
-      await localDataSource.saveTodo(todo, ++curRev);
+      curRev++;
+      await localDataSource.saveTodo(todo, curRev);
       return todo;
     }
   }
@@ -60,7 +59,8 @@ class TodoService implements ITodosRepository {
       }
     } else {
       var curRev = await localDataSource.getRevision();
-      await localDataSource.deleteTodo(todo.id!, curRev++);
+      curRev++;
+      await localDataSource.deleteTodo(todo.id!, curRev);
     }
   }
 
@@ -73,7 +73,8 @@ class TodoService implements ITodosRepository {
       return data;
     } else {
       var curRev = await localDataSource.getRevision();
-      await localDataSource.updateTodo(todo, curRev++);
+      curRev++;
+      await localDataSource.updateTodo(todo, curRev);
       return todo;
     }
   }

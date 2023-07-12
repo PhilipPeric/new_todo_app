@@ -81,6 +81,6 @@ class LocalDataSource implements ILocalDataSource {
     final sharedPreferences = await _sharedPreferences;
     final revision = sharedPreferences.getInt('revision');
 
-    return revision ?? -2;
+    return revision ?? 0;
   }
 }

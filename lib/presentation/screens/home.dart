@@ -95,6 +95,7 @@ class _HomeState extends State<Home> {
     var resp = await svc.getTodos();
     setState(() {
       todosList = resp;
+      _doneTasksCounter = 0;
       for (var i = 0; i < todosList.length; i++) {
         if (todosList[i].isDone) {
           _doneTasksCounter++;
@@ -105,6 +106,7 @@ class _HomeState extends State<Home> {
 
   Future<void> _handleToDoCheck(ToDo todo) async {
     todo.isDone = !todo.isDone;
+    todo.changedAt = DateTime.now();
     var resp = await svc.updateTodo(todo);
     if (resp != null) {
       setState(() {
@@ -165,6 +167,7 @@ class _HomeState extends State<Home> {
   }
 
   Future<void> _updateToDo(ToDo todo) async {
+    todo.changedAt = DateTime.now();
     var resp = await svc.updateTodo(todo);
     if (resp != null) {
       setState(() {

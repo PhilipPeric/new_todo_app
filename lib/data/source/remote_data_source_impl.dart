@@ -213,6 +213,6 @@ class RemoteDataSource implements IRemoteDataSource {
 
   @override
   int getRevision() {
-    return revision ?? -1;
+    return revision ?? 0;
   }
 }

@@ -6,7 +6,7 @@ class ToDo {
   bool isUrgent;
   bool isUnimportant;
   final DateTime createdAt;
-  final DateTime changedAt;
+  DateTime changedAt;
   final String? lastUpdatedBy;
 
   ToDo(
@@ -20,30 +20,6 @@ class ToDo {
     this.isUrgent = false,
     this.isUnimportant = false,
   });
-
-  ToDo copyWith({
-    String? id,
-    String? todoText,
-    DateTime? deadline,
-    bool? isDone,
-    bool? isUrgent,
-    bool? isUnimportant,
-    DateTime? createdAt,
-    DateTime? changedAt,
-    String? lastUpdatedBy,
-  }) {
-    return ToDo(
-      createdAt ?? this.createdAt,
-      changedAt ?? this.changedAt,
-      lastUpdatedBy,
-      id: id ?? this.id,
-      todoText: todoText ?? this.todoText,
-      deadline: deadline ?? this.deadline,
-      isDone: isDone ?? this.isDone,
-      isUrgent: isUrgent ?? this.isUrgent,
-      isUnimportant: isUnimportant ?? this.isUnimportant,
-    );
-  }
 
   static ToDo fromJson(Map<String, dynamic> todo) {
     return ToDo(
