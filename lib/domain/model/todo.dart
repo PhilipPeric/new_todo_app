@@ -42,14 +42,17 @@ class ToDo {
   }
 
   toJson() {
+    var importance = 'basic';
+    if (isUrgent) {
+      importance = 'important';
+    }
+    if (isUnimportant) {
+      importance = 'low';
+    }
     return {
       'id': id,
       'text': todoText,
-      'importance': isUrgent
-          ? 'important'
-          : isUnimportant
-              ? 'low'
-              : 'basic',
+      'importance': importance,
       'done': isDone,
       'created_at': createdAt.millisecondsSinceEpoch,
       'changed_at': changedAt.millisecondsSinceEpoch,
