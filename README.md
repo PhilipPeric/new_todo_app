@@ -18,7 +18,7 @@
 4. Готово - можно запускать проект на эмуляторе
 
 ### Как запустить интеграционные тесты 
-flutter test --flavor dev integration_test
+Чисто по клику на зеленую стрелочку в ui android studio
 
 
 [Скачать](https://github.com/PhilipPeric/new_todo_app/releases/download/3.0/app-arm64-v8a-release.apk)
