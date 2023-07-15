@@ -135,7 +135,7 @@ class _HomeState extends State<Home> {
     });
   }
 
-  void _awaitEditedValueFromSecondScreen(
+  Future<void> _awaitEditedValueFromSecondScreen(
       BuildContext context, ToDo todo) async {
     final result = await Navigator.push(
         context,

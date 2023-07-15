@@ -5,9 +5,9 @@ import '../../domain/model/todo.dart';
 
 class ToDoItem extends StatelessWidget {
   final ToDo todo;
-  final onToDoChanged;
-  final onDeleteItem;
-  final onEditItem;
+  final Future<void> Function(ToDo todo) onToDoChanged;
+  final Future<void> Function(ToDo todo) onDeleteItem;
+  final Future<void> Function(BuildContext context, ToDo todo) onEditItem;
 
   const ToDoItem({
     Key? key,
