@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "5657177933",
+    "project_id": "filip-peric-23",
+    "storage_bucket": "filip-peric-23.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:5657177933:android:51fc3878f3f4b4b9e81104",
+        "android_client_info": {
+          "package_name": "com.example.new_todo_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "5657177933-bo6n155ab9kuk4l6rdu203mlrg44nli8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDrj5r9FwKBShfFpD48VyLPcJBT69y-yKQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "5657177933-bo6n155ab9kuk4l6rdu203mlrg44nli8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
