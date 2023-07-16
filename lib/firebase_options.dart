@@ -17,15 +17,24 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      return web;
+      throw UnsupportedError(
+        'DefaultFirebaseOptions have not been configured for web - '
+        'you can reconfigure this by running the FlutterFire CLI again.',
+      );
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        return ios;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for ios - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -43,42 +52,11 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyB05SSM5HnEENZkdmliBbVL1r4iWKttFGY',
-    appId: '1:5657177933:web:42065c563e49a26ee81104',
-    messagingSenderId: '5657177933',
-    projectId: 'filip-peric-23',
-    authDomain: 'filip-peric-23.firebaseapp.com',
-    storageBucket: 'filip-peric-23.appspot.com',
-  );
-
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyDrj5r9FwKBShfFpD48VyLPcJBT69y-yKQ',
     appId: '1:5657177933:android:51fc3878f3f4b4b9e81104',
     messagingSenderId: '5657177933',
     projectId: 'filip-peric-23',
     storageBucket: 'filip-peric-23.appspot.com',
-  );
-
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBpNmrULdbHAiL1iFlBclt6i2o8bER6v7U',
-    appId: '1:5657177933:ios:e7345235633eff84e81104',
-    messagingSenderId: '5657177933',
-    projectId: 'filip-peric-23',
-    storageBucket: 'filip-peric-23.appspot.com',
-    iosClientId:
-        '5657177933-kl2spnohfit0lbllj8es28m93gb8orp0.apps.googleusercontent.com',
-    iosBundleId: 'com.example.newTodoApp',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyBpNmrULdbHAiL1iFlBclt6i2o8bER6v7U',
-    appId: '1:5657177933:ios:19829b07cdd65215e81104',
-    messagingSenderId: '5657177933',
-    projectId: 'filip-peric-23',
-    storageBucket: 'filip-peric-23.appspot.com',
-    iosClientId:
-        '5657177933-n5dvqrna9iqte5rnnobdc45t8aroci8l.apps.googleusercontent.com',
-    iosBundleId: 'com.example.newTodoApp.RunnerTests',
   );
 }
