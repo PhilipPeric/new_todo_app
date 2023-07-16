@@ -66,7 +66,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '5657177933',
     projectId: 'filip-peric-23',
     storageBucket: 'filip-peric-23.appspot.com',
-    iosClientId: '5657177933-kl2spnohfit0lbllj8es28m93gb8orp0.apps.googleusercontent.com',
+    iosClientId:
+        '5657177933-kl2spnohfit0lbllj8es28m93gb8orp0.apps.googleusercontent.com',
     iosBundleId: 'com.example.newTodoApp',
   );
 
@@ -76,7 +77,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '5657177933',
     projectId: 'filip-peric-23',
     storageBucket: 'filip-peric-23.appspot.com',
-    iosClientId: '5657177933-n5dvqrna9iqte5rnnobdc45t8aroci8l.apps.googleusercontent.com',
+    iosClientId:
+        '5657177933-n5dvqrna9iqte5rnnobdc45t8aroci8l.apps.googleusercontent.com',
     iosBundleId: 'com.example.newTodoApp.RunnerTests',
   );
 }
