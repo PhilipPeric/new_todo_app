@@ -60,9 +60,9 @@ android {
     signingConfigs {
         release {
             storeFile file('upload-keystore.jks')
-            storePassword = "$System.env.KEYSTORE_PASSWORD"
+            storePassword '232323'
             keyAlias = 'upload'
-            keyPassword = "$System.env.KEYSTORE_KEY_PASSWORD"
+            keyPassword '232323'
         }
     }
     buildTypes {
