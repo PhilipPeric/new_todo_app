@@ -54,5 +54,8 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.10.2'
-      - run: flutter build apk
-      - run: flutter build appbundle
+        env:
+          KEYSTORE_FILE_BASE64: ${{ secrets.KEYSTORE_FILE_BASE64 }}
+          KEYSTORE_KEY_PASSWORD: ${{ secrets.KEYSTORE_KEY_PASSWORD }}
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          run: echo $KEY_JKS > upload-keystore.jks && flutter build apk --release
