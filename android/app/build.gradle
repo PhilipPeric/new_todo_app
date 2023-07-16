@@ -46,6 +46,22 @@ android {
         main.java.srcDirs += 'src/main/kotlin'
     }
 
+    flavorDimensions "todoapp"
+    productFlavors {
+        dev {
+            dimension "todoapp"
+            applicationIdSuffix ""
+            resValue "string", "app_name", "Todo App Dev"
+            versionNameSuffix ".dev"
+        }
+        prod {
+            dimension "todoapp"
+            applicationIdSuffix ""
+            resValue "string", "app_name", "Todo App Prod"
+            versionNameSuffix ".prod"
+        }
+    }
+
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.example.new_todo_app"
@@ -60,9 +76,9 @@ android {
     signingConfigs {
         release {
             storeFile file('upload-keystore.jks')
-            storePassword = "$System.env.KEYSTORE_PASSWORD"
+            storePassword '232323'
             keyAlias = 'upload'
-            keyPassword = "$System.env.KEYSTORE_KEY_PASSWORD"
+            keyPassword '232323'
         }
     }
     buildTypes {
