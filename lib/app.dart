@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:new_todo_app/presentation/screens/home.dart';
@@ -9,7 +8,7 @@ import 'app_config.dart';
 class MyApp extends StatelessWidget {
   final AppConfig appConfig;
 
-  const MyApp(this.appConfig, {Key? key} ) : super(key: key);
+  const MyApp(this.appConfig, {Key? key}) : super(key: key);
 
   Widget _flavorBanner(Widget child) {
     return Banner(
@@ -35,8 +34,8 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => _flavorBanner(const Home()),
         '/newTask': (context) => _flavorBanner(FormExample(
-          todo: null,
-        )),
+              todo: null,
+            )),
       },
       debugShowCheckedModeBanner: false,
       title: 'ToDo App',
