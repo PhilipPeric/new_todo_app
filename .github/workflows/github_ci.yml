@@ -59,15 +59,15 @@ jobs:
           KEYSTORE_FILE_BASE64: ${{ secrets.KEYSTORE_FILE_BASE64 }}
           KEYSTORE_KEY_PASSWORD: ${{ secrets.KEYSTORE_KEY_PASSWORD }}
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
-        run: echo "$KEYSTORE_FILE_BASE64" | base64 -d > ./android/app/upload-keystore.jks && flutter pub get && flutter build apk -t lib/main_dev.dart  --flavor=dev
+        run: echo "$KEYSTORE_FILE_BASE64" | base64 -d > ./android/app/upload-keystore.jks && flutter pub get && flutter build apk -t lib/main_prod.dart  --flavor=prod
       - uses: actions/upload-artifact@v1
         with:
           name: release-apk
-          path: build/app/outputs/apk/release/app-arm64-v8a-release.apk
+          path: build/app/outputs/flutter-apk/app-prod-release.apk
       - name: "Deploy artifact to Firebase App Distribution"
         uses: wzieba/Firebase-Distribution-Github-Action@v1
         with:
           appId: ${{secrets.FIREBASE_APP_ID_ANDROID}}
           token: ${{secrets.FIREBASE_TOKEN}}
           groups: meastester
-          file: build/app/outputs/apk/release/app-arm64-v8a-release.apk
+          file: build/app/outputs/flutter-apk/app-prod-release.apk
