@@ -9,11 +9,13 @@ import 'app_config.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
-  AppConfig devAppConfig = AppConfig(appName: 'Todo app dev', flavor: 'dev');
   WidgetsFlutterBinding.ensureInitialized();
+  AppConfig devAppConfig = AppConfig(appName: 'Todo app dev', flavor: 'dev');
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
   FlutterError.onError = (errorDetails) {
     FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
   };

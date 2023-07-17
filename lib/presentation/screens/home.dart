@@ -1,3 +1,4 @@
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 
 import '../../data/repository/todo_service_impl.dart';
@@ -21,17 +22,42 @@ class _HomeState extends State<Home> {
   final scrollController = ScrollController();
   int _doneTasksCounter = 0;
   bool isFiltered = false;
+  bool stringColor = true;
 
   var svc = TodoService(RemoteDataSource(), LocalDataSource());
 
+  final FirebaseRemoteConfig _remoteConfig = FirebaseRemoteConfig.instance;
+  Future<void> _initConfig() async {
+    await _remoteConfig.setConfigSettings(RemoteConfigSettings(
+      fetchTimeout: const Duration(
+          seconds: 1), // a fetch will wait up to 10 seconds before timing out
+      minimumFetchInterval: const Duration(
+          seconds:
+          10), // fetch parameters will be cached for a maximum of 1 hour
+    ));
+
+    _fetchConfig();
+  }
+
+  void _fetchConfig() async {
+    _remoteConfig.onConfigUpdated.listen((event) async {
+      await _remoteConfig.fetchAndActivate();
+      setState(() {
+        stringColor = _remoteConfig.getBool('default_importance_color');
+      });
+    });
+  }
+
   @override
   void initState() {
+    _initConfig();
     super.initState();
     _getData();
   }
 
   @override
   Widget build(BuildContext context) {
+    stringColor = _remoteConfig.getBool('default_importance_color');
     return Scaffold(
       backgroundColor: const Color(0xFFF7F6F2),
       floatingActionButton: FloatingActionButton(
@@ -64,6 +90,7 @@ class _HomeState extends State<Home> {
                                           .toList())
                                         ToDoItem(
                                           todo: todo,
+                                          defaultColor: stringColor,
                                           onToDoChanged: _handleToDoCheck,
                                           onDeleteItem: _deleteToDoItem,
                                           onEditItem:
@@ -74,6 +101,7 @@ class _HomeState extends State<Home> {
                                       for (ToDo todo in todosList)
                                         ToDoItem(
                                           todo: todo,
+                                          defaultColor: stringColor,
                                           onToDoChanged: _handleToDoCheck,
                                           onDeleteItem: _deleteToDoItem,
                                           onEditItem:
@@ -224,3 +252,4 @@ class _HomeState extends State<Home> {
     );
   }
 }
+

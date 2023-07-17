@@ -8,8 +8,8 @@ import 'app_config.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
-  AppConfig prodAppConfig = AppConfig(appName: 'Todo app Prod', flavor: 'prod');
   WidgetsFlutterBinding.ensureInitialized();
+  AppConfig prodAppConfig = AppConfig(appName: 'Todo app Prod', flavor: 'prod');
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
