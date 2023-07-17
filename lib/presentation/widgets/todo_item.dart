@@ -68,7 +68,9 @@ class ToDoItem extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             maxLines: 3,
             style: TextStyle(
-              color:  !defaultColor && todo.isUrgent ? const Color(0xFF793cd8) : Colors.black,
+              color: !defaultColor && todo.isUrgent
+                  ? const Color(0xFF793cd8)
+                  : Colors.black,
               fontSize: 16,
               decoration: todo.isDone ? TextDecoration.lineThrough : null,
             ),
