@@ -5,13 +5,15 @@ import '../../domain/model/todo.dart';
 
 class ToDoItem extends StatelessWidget {
   final ToDo todo;
-  final onToDoChanged;
-  final onDeleteItem;
-  final onEditItem;
+  final bool defaultColor;
+  final Future<void> Function(ToDo todo) onToDoChanged;
+  final Future<void> Function(ToDo todo) onDeleteItem;
+  final Future<void> Function(BuildContext context, ToDo todo) onEditItem;
 
   const ToDoItem({
     Key? key,
     required this.todo,
+    required this.defaultColor,
     required this.onToDoChanged,
     required this.onDeleteItem,
     required this.onEditItem,
@@ -66,6 +68,9 @@ class ToDoItem extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             maxLines: 3,
             style: TextStyle(
+              color: !defaultColor && todo.isUrgent
+                  ? const Color(0xFF793cd8)
+                  : Colors.black,
               fontSize: 16,
               decoration: todo.isDone ? TextDecoration.lineThrough : null,
             ),

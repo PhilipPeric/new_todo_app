@@ -6,6 +6,7 @@ import 'package:uuid/uuid.dart';
 
 var uuid = const Uuid();
 
+//ignore: must_be_immutable
 class FormExample extends StatefulWidget {
   ToDo? todo;
 
@@ -200,7 +201,7 @@ class _FormExampleState extends State<FormExample> {
                         ),
                         Text(
                           selectedDate != null
-                              ? DateFormat("dd MMMM yyy").format(selectedDate!)
+                              ? DateFormat('dd MMMM yyy').format(selectedDate!)
                               : '',
                           style: const TextStyle(
                               color: Colors.black, fontSize: 16),

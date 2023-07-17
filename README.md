@@ -1,15 +1,26 @@
 # Приложение для организации тасок в рамках ШМР 2023
 
-### Что сделано в рамках третьего домашнего задания
+### Что сделано 
 - [x] Сохранение данных локально
 - [x] Offline first
 - [x] Unit тесты
 - [x] Интеграционные тесты
 - [x] Разделение слоев уровней работы с данными
+- [x] CI\CD: тесты, анализатор кода, билд и деплой в Firebase App Distribution, используя github actions
+- [x] firebase analytics
+- [x] firebase remote config
+- [x] firebase crashlitics
+- [x] темная тема
+- [x] flutter flavours
+...
 
-### Что точно не сделано
-- [ ] Deep links
-- [ ] Navigator 2.0
+### flutter flavours - варианты запуска
+flutter run -t lib/main_dev.dart  --flavor=dev
+flutter run -t lib/main_prod.dart  --flavor=prod
+
+запущенные версии отличаются шильдиками в правом верхнем углу
+
+![Скриншот](https://github.com/PhilipPeric/new_todo_app/blob/release/homework_4/screenshots/Screenshot_20230717_021856.png)
 
 ### Как запустить 
 1. Переименовать файл .env.example в .env

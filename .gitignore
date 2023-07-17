@@ -1,5 +1,5 @@
 # Credentials
-env.g.dart
+*.jks
 *.env
 # Miscellaneous
 *.class
